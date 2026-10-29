@@ -319,13 +319,13 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     Package pkg = VelocityServer.class.getPackage();
     String implName = Optional.ofNullable(pkg)
         .map(Package::getImplementationTitle)
-        .orElse("Velocity-CTD");
+        .orElse("PINGWIN-VELOCITY");
     String implVersion = Optional.ofNullable(pkg)
         .map(Package::getImplementationVersion)
         .orElse("<unknown>");
     String implVendor = Optional.ofNullable(pkg)
         .map(Package::getImplementationVendor)
-        .orElse("Velocity(-CTD) Contributors");
+        .orElse("PINGWIN-VELOCITY, Velocity(-CTD) Contributors");
 
     return new ProxyVersion(implName, implVendor, implVersion);
   }
@@ -333,8 +333,8 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
   private VelocityPluginContainer createVirtualPlugin() {
     ProxyVersion version = getVersion();
     PluginDescription description = new VelocityPluginDescription(
-        "velocityctd", version.getName(), version.getVersion(), "The Velocity-CTD proxy",
-            (version.getName().equals("Velocity") || version.getName().equals("Velocity-CTD")) ? VELOCITY_URL : null,
+        "velocityctd", version.getName(), version.getVersion(), "The PINGWIN-VELOCITY proxy (fork of Velocity-CTD)",
+            (version.getName().equals("Velocity") || version.getName().equals("Velocity-CTD") || version.getName().equals("PINGWIN-VELOCITY")) ? VELOCITY_URL : null,
             ImmutableList.of(version.getVendor()), Collections.emptyList(),
             Collections.emptyList(), null);
     VelocityPluginContainer container = new VelocityPluginContainer(description);

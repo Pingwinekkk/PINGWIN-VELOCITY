@@ -9,6 +9,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   RELEASE_BRANCH: refs/heads/dev/4.0.0
 
@@ -67,51 +70,38 @@ jobs:
         BUILD_NUMBER: ${{ steps.release_tag.outputs.build_nr }}
       run: ./gradlew build
 
-    - name: Rename Velocity-CTD Fat Jar
+    - name: Rename PINGWIN-VELOCITY Fat Jar
       if: github.ref == env.RELEASE_BRANCH
       run: |
         JAR=$(ls proxy/build/libs/velocity-proxy-*-all.jar)
         VERSION=$(echo "$JAR" | sed 's|proxy/build/libs/velocity-proxy-||' | sed 's|-all\.jar||')
-        cp "$JAR" "proxy/build/libs/velocity-ctd-fatjar-$VERSION-${{ steps.release_tag.outputs.build_nr }}.jar"
+        cp "$JAR" "proxy/build/libs/pingwin-velocity-fatjar-$VERSION-${{ steps.release_tag.outputs.build_nr }}.jar"
 
-    - name: Rename Velocity-CTD Bootstrap Jar
+    - name: Rename PINGWIN-VELOCITY Bootstrap Jar
       if: github.ref == env.RELEASE_BRANCH
       run: |
         JAR=$(ls bootstrap/build/libs/velocity-bootstrap-*.jar | grep -v -- '-sources\.jar')
         VERSION=$(echo "$JAR" | sed 's|bootstrap/build/libs/velocity-bootstrap-||' | sed 's|\.jar||')
-        cp "$JAR" "bootstrap/build/libs/velocity-ctd-$VERSION-${{ steps.release_tag.outputs.build_nr }}.jar"
-
-    - name: Publish to Maven Repository
-      if: github.ref == env.RELEASE_BRANCH
-      continue-on-error: true
-      env:
-        BUILD_NUMBER: ${{ steps.release_tag.outputs.build_nr }}
-        ORG_GRADLE_PROJECT_velocityctdUser: ${{ secrets.MAVEN_USERNAME }}
-        ORG_GRADLE_PROJECT_velocityctdPassword: ${{ secrets.MAVEN_PASSWORD }}
-      run: ./gradlew publish
+        cp "$JAR" "bootstrap/build/libs/pingwin-velocity-$VERSION-${{ steps.release_tag.outputs.build_nr }}.jar"
 
     - name: Upload as GitHub Release
       if: github.ref == env.RELEASE_BRANCH
       continue-on-error: true
       uses: softprops/action-gh-release@v3
       with:
-        name: "Velocity-CTD"
+        name: "PINGWIN-VELOCITY build-${{ steps.release_tag.outputs.build_nr }}"
         tag_name: "${{ steps.release_tag.outputs.tag }}"
         token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: false
         generate_release_notes: true
         body: |
-          ## Which jar should I download?
+          ## PINGWIN-VELOCITY
+          Fork [Velocity-CTD](https://github.com/GemstoneGG/Velocity-CTD) (GPL-3.0).
 
-          **Recommended — `velocity-ctd-<version>-<build>.jar` (bootstrap jar)**
-          This is the bootstrap jar. It downloads the required dependencies only once, keeping the download small. Use this one.
-
-          **Fallback — `velocity-ctd-fatjar-<version>-<build>.jar`**
-          Only download the fatjar if the bootstrap jar is causing issues for you. If it is, please [open an issue](https://github.com/${{ github.repository }}/issues) describing the problem so we can fix it.
-
-          > ⚠️ The fatjar will be removed soon — please migrate to the bootstrap jar.
+          **Do serwera pobierz `pingwin-velocity-fatjar-<wersja>-<build>.jar`** - zawiera wszystko i nie pobiera nic przy starcie.
+          `pingwin-velocity-<wersja>-<build>.jar` (bootstrap) przy pierwszym starcie dociąga biblioteki.
 
           ---
         files: |
-          proxy/build/libs/velocity-ctd-fatjar-*-${{ steps.release_tag.outputs.build_nr }}.jar
-          bootstrap/build/libs/velocity-ctd-*-${{ steps.release_tag.outputs.build_nr }}.jar
+          proxy/build/libs/pingwin-velocity-fatjar-*-${{ steps.release_tag.outputs.build_nr }}.jar
+          bootstrap/build/libs/pingwin-velocity-*-${{ steps.release_tag.outputs.build_nr }}.jar

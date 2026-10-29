@@ -2299,7 +2299,7 @@ public final class VelocityConfiguration implements ProxyConfig {
      * Custom brand name shown for the proxy in debug/version displays.
      */
     @Expose
-    private String proxyBrandCustom = "Velocity-CTD";
+    private String proxyBrandCustom = "PINGWIN-VELOCITY";
 
     /**
      * Custom brand name shown for the backend server in debug/version displays.
@@ -2360,7 +2360,7 @@ public final class VelocityConfiguration implements ProxyConfig {
         this.fallbackVersionPing = reserializeToLegacy(
             config.getOrElse("fallback-version-ping", "{proxy-brand} {protocol-min}-{protocol-max}"));
         this.alwaysFallBackPing = config.getOrElse("always-fallback-ping", false);
-        this.proxyBrandCustom = config.getOrElse("custom-brand-proxy", "Velocity-CTD");
+        this.proxyBrandCustom = config.getOrElse("custom-brand-proxy", "PINGWIN-VELOCITY");
         this.backendBrandCustom = config.getOrElse("custom-brand-backend", "Paper");
         this.ignoreAnonymousPlayerRequest = config.getOrElse("ignore-anonymous-player-request", false);
         this.poolPlayersAcrossSections = config.getOrElse("pool-players-across-sections", false);
@@ -2530,7 +2530,7 @@ public final class VelocityConfiguration implements ProxyConfig {
     @Expose
     private int queryPort = 25565;
     @Expose
-    private String queryMap = "Velocity-CTD";
+    private String queryMap = "PINGWIN-VELOCITY";
 
     @Expose
     private boolean showPlugins = false;
@@ -2542,7 +2542,7 @@ public final class VelocityConfiguration implements ProxyConfig {
       if (config != null) {
         this.queryEnabled = config.getOrElse("enabled", false);
         this.queryPort = config.getIntOrElse("port", 25565);
-        this.queryMap = config.getOrElse("map", "Velocity-CTD");
+        this.queryMap = config.getOrElse("map", "PINGWIN-VELOCITY");
         this.showPlugins = config.getOrElse("show-plugins", false);
       }
     }

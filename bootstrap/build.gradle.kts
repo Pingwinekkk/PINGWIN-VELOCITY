@@ -178,8 +178,8 @@ tasks.processResources {
 tasks.jar {
     manifest {
         attributes["Main-Class"] = "com.velocityctd.bootstrap.BootstrapMain"
-        attributes["Implementation-Title"] = "Velocity-CTD Bootstrap"
-        attributes["Implementation-Vendor"] = "Velocity(-CTD) Contributors"
+        attributes["Implementation-Title"] = "PINGWIN-VELOCITY Bootstrap"
+        attributes["Implementation-Vendor"] = "PINGWIN-VELOCITY, Velocity(-CTD) Contributors"
         attributes["Multi-Release"] = "true"
         attributes["Enable-Native-Access"] = "ALL-UNNAMED"
         attributes["Enable-Final-Field-Mutation"] = "ALL-UNNAMED"

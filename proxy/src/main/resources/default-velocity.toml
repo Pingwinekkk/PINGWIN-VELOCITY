@@ -383,7 +383,7 @@ allow-illegal-characters-in-chat = false
 server-brand = "{backend-brand} ({proxy-brand})"
 
 # Replaces what is returned for both the server brand and fallback version pinger.
-custom-brand-proxy = "Velocity-CTD"
+custom-brand-proxy = "PINGWIN-VELOCITY"
 
 # Replaces what is returned as the server brand for the user's client.
 custom-brand-backend = "Paper"
@@ -452,7 +452,7 @@ enabled = false
 port = 25565
 
 # This is the map name reported to the query services.
-map = "Velocity-CTD"
+map = "PINGWIN-VELOCITY"
 
 # Whether plugins should be shown in query response by default or not.
 show-plugins = false
