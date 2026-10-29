@@ -334,7 +334,8 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     ProxyVersion version = getVersion();
     PluginDescription description = new VelocityPluginDescription(
         "velocityctd", version.getName(), version.getVersion(), "The PINGWIN-VELOCITY proxy (fork of Velocity-CTD)",
-            (version.getName().equals("Velocity") || version.getName().equals("Velocity-CTD") || version.getName().equals("PINGWIN-VELOCITY")) ? VELOCITY_URL : null,
+            (version.getName().equals("Velocity") || version.getName().equals("Velocity-CTD")
+                || version.getName().equals("PINGWIN-VELOCITY")) ? VELOCITY_URL : null,
             ImmutableList.of(version.getVendor()), Collections.emptyList(),
             Collections.emptyList(), null);
     VelocityPluginContainer container = new VelocityPluginContainer(description);
