@@ -21,8 +21,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.pingwin.velocity.lang.LanguageCommand;
-import com.pingwin.velocity.lang.PingwinLanguages;
 import com.velocityctd.proxy.cluster.VelocityClusterPlayerService;
 import com.velocityctd.proxy.cluster.VelocityClusterProxyService;
 import com.velocityctd.proxy.cluster.local.LocalClusterPlayerService;
@@ -223,7 +221,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
    * Velocity's Adventure translations.
    */
   private final TranslationRegistryManager translationRegistryManager = new TranslationRegistryManager();
-  private final PingwinLanguages languages = new PingwinLanguages(this);
 
   /**
    * Coordinates server queues and handles queue assignment logic.
@@ -346,15 +343,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     return container;
   }
 
-  /**
-   * Języki graczy i tłumaczenie wiadomości (PINGWIN-VELOCITY).
-   *
-   * @return menedżer języków
-   */
-  public PingwinLanguages getLanguages() {
-    return languages;
-  }
-
   @Override
   public VelocityCommandManager getCommandManager() {
     return commandManager;
@@ -437,7 +425,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
 
     transferPackSecret = new TransferPackSecret(redis);
 
-    languages.load();
     registerCommands();
 
     // Re-send the available commands to all online players once a click-callback has been registered.
@@ -606,7 +593,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
 
     reconcileServers(oldConfiguration, newConfiguration);
 
-    languages.load();
     registerCommands();
 
     translationRegistryManager.unregisterTranslations();
@@ -717,7 +703,6 @@ public class VelocityServer implements ProxyServer, ForwardingAudience {
     registerCommand(configuration.getQueue().isEnabled(), QueueAdminCommand::new);
     registerCommand(configuration.getQueue().isEnabled(), LeaveQueueCommand::new);
     registerCommand(configuration.isServerEnabled(), ServerCommand::new);
-    registerCommand(LanguageCommand::new);
 
     // /<server_name> commands
     for (Map.Entry<String, List<String>> entry : configuration.getSlashServers().entrySet()) {

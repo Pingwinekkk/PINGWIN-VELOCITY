@@ -29,7 +29,6 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
-import com.pingwin.velocity.lang.TranslatingEncoder;
 import com.velocityctd.api.event.permission.PermissionsChangeEvent;
 import com.velocityctd.api.permission.PermissionResolver;
 import com.velocityctd.api.queue.QueueState;
@@ -327,11 +326,6 @@ public class ConnectedPlayer implements MinecraftConnectionAssociation, Player, 
     this.chatBuilderFactory = new ChatBuilderFactory(this.getProtocolVersion());
     this.resourcePackHandler = ResourcePackHandler.create(this, server);
     this.bossBarManager = new BossBarManager(this);
-    // PINGWIN-VELOCITY: tłumaczenie wiadomości do gracza według jego języka (/jezyk).
-    if (connection.getChannel().pipeline().get(Connections.MINECRAFT_ENCODER) != null) {
-      connection.getChannel().pipeline().addAfter(Connections.MINECRAFT_ENCODER, TranslatingEncoder.NAME,
-          new TranslatingEncoder(server.getLanguages(), this));
-    }
   }
 
   /**
